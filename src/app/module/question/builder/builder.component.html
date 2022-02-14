@@ -1,0 +1,40 @@
+<form [formGroup]="questionsForm">
+    <div class="not-found" *ngIf="!isData">
+        <img src="/assets/images/404-image.svg" />
+        <h1>{{ lables.Title }} </h1>
+        <span>{{ lables.PleaseAddQuestions }}</span>
+    </div>
+    <div formArrayName="questions" *ngFor="let item of questions.controls; let i = index;">
+        <div [formGroupName]="i">
+            <ng-container *ngIf="item.get('type')?.value == questionTypes.paragraph">
+                <div class="com-sec-part">
+                    <h2>{{item.get('question')?.value}}</h2>
+                    <ng-container formArrayName="answers" *ngFor="let a of getAnswers(item); let j = index;">
+                        <div [formGroupName]="j">
+                            <mat-form-field appearance="outline" floatLabel="always" class="w-100">
+                                <mat-label>{{lables.Comments}}</mat-label>
+                                <textarea matInput formControlName="answerValue"></textarea>
+                            </mat-form-field>
+                        </div>
+                    </ng-container>
+                </div>
+            </ng-container>
+            <ng-container *ngIf="item.get('type')?.value == questionTypes.checkbox ">
+                <div class="com-sec-part">
+                    <h2>{{item.get('question')?.value}}</h2>
+                    <ng-container formArrayName="answers" *ngFor="let a of getAnswers(item); let j = index;">
+                        <div [formGroupName]="j">
+                            <mat-checkbox formControlName="answerValue">{{getAnswer(a).answerText.value}}</mat-checkbox>
+                        </div>
+                    </ng-container>
+                </div>
+            </ng-container>
+        </div>
+    </div>
+</form>
+<div class="flex justify-content-between button-wrapper">
+    <button mat-flat-button (click)="openDialog()" color="primary" variant="outlined">{{ lables.AddQuestion }}</button>
+    <a *ngIf="isData" [routerLink]="[links.answer.path]" routerLinkActive="active" mat-flat-button color="primary">
+        {{lables.ReviewMyAnswer}}
+    </a>
+</div>

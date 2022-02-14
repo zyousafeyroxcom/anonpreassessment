@@ -1,0 +1,25 @@
+.w-100 {
+    width: 100%;
+    display: block;
+}
+
+form{
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: baseline;
+    justify-content: space-between;
+}
+
+.mat-radio-button{
+    width: 100%;
+    margin-bottom: 8px;
+}
+
+.actionBtn{
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    width: 100%;
+    gap: 0.5rem;
+}

@@ -1,0 +1,26 @@
+<section>
+    <div *ngFor="let question of questions">
+        <h2>{{question.question}}</h2>
+        <ng-container *ngIf="question.type == questionTypes.paragraph ">
+            <div *ngFor="let answer of question.answers">
+                <p>{{answer.answerValue}}</p>
+            </div>
+        </ng-container>
+        <ng-container *ngIf="question.type == questionTypes.checkbox ">
+            <div *ngFor="let answer of question.answers">
+                <mat-checkbox disabled="true" [checked]="answer.answerValue">{{answer.answerText}}</mat-checkbox>
+            </div>
+        </ng-container>
+    </div>
+</section>
+
+<div class="flex justify-content-between button-wrapper">
+    <a 
+        [routerLink]="[ links.builder.path ]" 
+        routerLinkActive="active"  
+        mat-flat-button 
+        color="primary"
+    >
+        {{lables.BackToFormBuilder}}
+    </a>
+</div>

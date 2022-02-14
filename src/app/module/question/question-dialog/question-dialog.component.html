@@ -1,0 +1,49 @@
+<form [formGroup]="questionForm">
+    <div class="w-100">
+        <ng-container *ngIf="!questionForm.get('type')?.value">
+            <div class="inputField w-100">
+                <h2>{{lables.QuestionFormat }}</h2>
+                <mat-radio-group formControlName="type">
+                    <mat-radio-button value="paragraph">{{lables.ParagraphAnswer }}</mat-radio-button>
+                    <mat-radio-button value="checkbox"> {{lables .CheckboxList }}</mat-radio-button>
+                </mat-radio-group>
+            </div>
+        </ng-container>
+    
+        <ng-container *ngIf="questionForm.get('type')?.value == questionTypes.paragraph ">
+            <h3>{{lables.NewQuestion}}</h3>
+            <div class="inputField w-100">
+                <mat-form-field appearance="outline">
+                    <mat-label>{{lables.Question}}</mat-label>
+                    <input matInput formControlName="question">
+                </mat-form-field>
+            </div>
+        </ng-container>
+    
+        <ng-container *ngIf="questionForm.get('type')?.value == questionTypes.checkbox ">
+            <h3>{{lables.NewQuestion}}</h3>
+            <div class="inputField w-100">
+                <mat-form-field appearance="outline">
+                    <mat-label>{{lables.Question}}</mat-label>
+                    <input matInput formControlName="question">
+                </mat-form-field>
+            </div>
+            <div formArrayName="answers" *ngFor="let item of answers.controls; let i = index;">
+                <div [formGroupName]="i">
+                    <mat-form-field appearance="outline">
+                        <mat-label>{{lables.Answer}}</mat-label>
+                        <input matInput formControlName="answerText">
+                    </mat-form-field>
+                </div>
+            </div>
+            <div>
+                <button mat-flat-button (click)="newAnswer()" color="primary" variant="outlined">{{lables.AddNewAnswer}}</button>
+            </div>
+        </ng-container>
+    </div>
+        
+    <div class="actionBtn">
+        <button type="button" mat-flat-button mat-dialog-close (click)="questionForm.reset()">{{lables.Cancel}}</button>
+        <button type="submit" [disabled]="questionForm.invalid" mat-flat-button (click)="closeDialog()" color="primary">{{lables.Submit}}</button>
+    </div>
+</form>
